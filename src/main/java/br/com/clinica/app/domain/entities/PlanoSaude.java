@@ -1,4 +1,4 @@
-package br.com.clinica.app.domain;
+package br.com.clinica.app.domain.entities;
 
 import lombok.Builder;
 import lombok.Getter;

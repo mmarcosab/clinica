@@ -1,13 +1,15 @@
-package br.com.clinica.app.domain;
+package br.com.clinica.app.adapters.presentation.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Setter
-public class Endereco {
+public class EnderecoResponse {
     private String rua;
     private String numero;
     private String cidade;
