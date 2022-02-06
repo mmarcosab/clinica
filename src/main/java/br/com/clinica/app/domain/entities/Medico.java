@@ -1,13 +1,12 @@
 package br.com.clinica.app.domain.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+
+@ToString
 @Getter
-@Builder
 @Setter
+@NoArgsConstructor
 public class Medico {
     private Long codigo;
     private String nome;

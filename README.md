@@ -1,0 +1,5 @@
+# Tecnologias usadas
+
+- ModelMapper
+- Hibernate
+- 

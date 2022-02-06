@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+@ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

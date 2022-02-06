@@ -1,16 +1,16 @@
 package br.com.clinica.app.adapters.database.entities;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
+
 @Getter
-@Builder
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "secretario")
 public class SecretarioData {
     @Id
@@ -24,6 +24,6 @@ public class SecretarioData {
     private String rg;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private EnderecoData endereco;
 }

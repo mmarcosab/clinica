@@ -1,13 +1,14 @@
 package br.com.clinica.app.domain.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
+
+@ToString
 @Getter
-@Builder
 @Setter
+@NoArgsConstructor
 public class RegistroCaixaSaida {
     List<Despesa> despesas;
 }

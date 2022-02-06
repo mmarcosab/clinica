@@ -1,12 +1,12 @@
 package br.com.clinica.app.domain.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+
+@ToString
 @Getter
-@Builder
 @Setter
+@NoArgsConstructor
 public class PlanoSaude {
     private String tipo;
     private String codigoIdentificacao;

@@ -1,15 +1,15 @@
 package br.com.clinica.app.adapters.database.entities;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Getter
-@Builder
+@NoArgsConstructor
 @Setter
 @Entity
 @Table(name = "paciente")

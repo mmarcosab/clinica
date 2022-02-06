@@ -1,13 +1,13 @@
 package br.com.clinica.app.adapters.database.entities;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
+
 @Getter
-@Builder
+@NoArgsConstructor
 @Setter
 @Entity
 @Table(name = "medico")
