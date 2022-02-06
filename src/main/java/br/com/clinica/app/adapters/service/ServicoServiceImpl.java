@@ -66,7 +66,7 @@ public class ServicoServiceImpl implements ServicoService {
         if(servicoData.isEmpty()){
             throw new DadoNaoEncontradoException("servico nao contrado pelo id: " + id);
         }
-        return modelMapper.map(servicoData, ServicoResponse.class);
+        return  modelMapper.map(servicoData.get(), ServicoResponse.class);
     }
 
 }

@@ -67,7 +67,7 @@ public class PacienteServiceImpl implements PacienteService {
         if(pacienteData == null){
             throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
         }
-        return modelMapper.map(pacienteData, PacienteResponse.class);
+        return modelMapper.map(pacienteData.get(), PacienteResponse.class);
     }
 
 }

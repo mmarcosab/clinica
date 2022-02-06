@@ -66,7 +66,7 @@ public class SecretarioServiceImpl implements SecretarioService {
         if(secretarioData.isEmpty()){
             throw new DadoNaoEncontradoException("secretario nao contrado pelo id: " + id);
         }
-        return modelMapper.map(secretarioData, SecretarioResponse.class);
+        return modelMapper.map(secretarioData.get(), SecretarioResponse.class);
     }
 
 }

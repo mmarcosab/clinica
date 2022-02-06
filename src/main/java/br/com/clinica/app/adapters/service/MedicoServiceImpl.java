@@ -65,7 +65,7 @@ public class MedicoServiceImpl implements MedicoService {
         if(medicoData.isEmpty()){
             throw new DadoNaoEncontradoException("medico nao encontrado pelo id: " + id);
         }
-        return modelMapper.map(medicoData, MedicoResponse.class);
+        return modelMapper.map(medicoData.get(), MedicoResponse.class);
     }
 
 }
