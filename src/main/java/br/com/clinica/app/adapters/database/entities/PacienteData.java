@@ -25,10 +25,10 @@ public class PacienteData {
     private String rg;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private EnderecoData endereco;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private PlanoSaudeData planoSaude;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.PERSIST)
     private List<ConsultaData> historico;
 }

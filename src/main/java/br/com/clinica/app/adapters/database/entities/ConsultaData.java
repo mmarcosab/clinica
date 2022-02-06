@@ -20,6 +20,6 @@ public class ConsultaData {
     private String descricao;
     @OneToMany
     private List<ExameData> exames;
-    @ManyToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private MedicoData medico;
 }

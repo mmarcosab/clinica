@@ -23,6 +23,6 @@ public class MedicoData {
     private String rg;
     @Column(name = "crm")
     private String crm;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private EnderecoData endereco;
 }
