@@ -3,6 +3,7 @@ package br.com.clinica.app.adapters.presentation.controller;
 import br.com.clinica.app.adapters.presentation.request.SecretarioRequest;
 import br.com.clinica.app.adapters.presentation.response.SecretarioResponse;
 import br.com.clinica.app.domain.entities.Secretario;
+import br.com.clinica.app.domain.exception.DadoNaoEncontradoException;
 import br.com.clinica.app.domain.service.SecretarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,17 +34,17 @@ public class SecretarioController {
     }
 
     @GetMapping("/{secretarioId}")
-    public SecretarioResponse findById(@PathVariable Long secretarioId){
+    public SecretarioResponse findById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
         return secretarioService.getById(secretarioId);
     }
 
     @PatchMapping("/{secretarioId}")
-    public SecretarioResponse update(@PathVariable Long secretarioId, @PathVariable SecretarioRequest secretarioRequest){
+    public SecretarioResponse update(@PathVariable Long secretarioId, @PathVariable SecretarioRequest secretarioRequest) throws DadoNaoEncontradoException {
         return secretarioService.update(modelMapper.map(secretarioRequest, Secretario.class), secretarioId);
     }
 
     @DeleteMapping("/{secretarioId}")
-    public void deleteById(@PathVariable Long secretarioId){
+    public void deleteById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
         secretarioService.delete(secretarioId);
     }
 

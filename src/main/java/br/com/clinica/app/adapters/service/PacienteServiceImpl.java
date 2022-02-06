@@ -4,6 +4,7 @@ import br.com.clinica.app.adapters.database.entities.PacienteData;
 import br.com.clinica.app.adapters.database.repository.PacienteRepository;
 import br.com.clinica.app.adapters.presentation.response.PacienteResponse;
 import br.com.clinica.app.domain.entities.Paciente;
+import br.com.clinica.app.domain.exception.DadoNaoEncontradoException;
 import br.com.clinica.app.domain.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,21 +42,31 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public PacienteResponse update(Paciente paciente, Long id) {
-        PacienteData pacienteData = modelMapper.map(paciente, PacienteData.class);
+    public PacienteResponse update(Paciente paciente, Long id) throws DadoNaoEncontradoException {
+        var pacientePesquisado = pacienteRepository.findById(id);
+        if(pacientePesquisado == null){
+            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        }
+        var pacienteData = modelMapper.map(paciente, PacienteData.class);
         pacienteData.setId(id);
         return modelMapper.map(pacienteRepository.save(pacienteData), PacienteResponse.class);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DadoNaoEncontradoException {
+        var pacienteData = pacienteRepository.findById(id);
+        if(pacienteData == null){
+            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        }
         pacienteRepository.deleteById(id);
     }
 
     @Override
-    public PacienteResponse getById(Long id) {
-        PacienteData pacienteData = pacienteRepository.getById(id);
-        //TODO colocar excecao de not found aqui
+    public PacienteResponse getById(Long id) throws DadoNaoEncontradoException {
+        var pacienteData = pacienteRepository.findById(id);
+        if(pacienteData == null){
+            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        }
         return modelMapper.map(pacienteData, PacienteResponse.class);
     }
 

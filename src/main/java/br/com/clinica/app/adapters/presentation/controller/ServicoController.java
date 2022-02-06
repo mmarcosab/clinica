@@ -3,6 +3,7 @@ package br.com.clinica.app.adapters.presentation.controller;
 import br.com.clinica.app.adapters.presentation.request.ServicoRequest;
 import br.com.clinica.app.adapters.presentation.response.ServicoResponse;
 import br.com.clinica.app.domain.entities.Servico;
+import br.com.clinica.app.domain.exception.DadoNaoEncontradoException;
 import br.com.clinica.app.domain.service.ServicoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,17 +34,17 @@ public class ServicoController {
     }
 
     @GetMapping("/{servicoId}")
-    public ServicoResponse findById(@PathVariable Long servicoId){
+    public ServicoResponse findById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
         return service.getById(servicoId);
     }
 
     @PatchMapping("/{servicoId}")
-    public ServicoResponse update(@PathVariable Long servicoId, @PathVariable ServicoRequest servicoRequest){
+    public ServicoResponse update(@PathVariable Long servicoId, @PathVariable ServicoRequest servicoRequest) throws DadoNaoEncontradoException {
         return service.update(modelMapper.map(servicoRequest, Servico.class), servicoId);
     }
 
     @DeleteMapping("/{servicoId}")
-    public void deleteById(@PathVariable Long servicoId){
+    public void deleteById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
         service.delete(servicoId);
     }
 

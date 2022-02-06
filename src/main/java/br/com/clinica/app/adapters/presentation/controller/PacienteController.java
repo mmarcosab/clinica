@@ -4,6 +4,7 @@ package br.com.clinica.app.adapters.presentation.controller;
 import br.com.clinica.app.adapters.presentation.request.PacienteRequest;
 import br.com.clinica.app.adapters.presentation.response.PacienteResponse;
 import br.com.clinica.app.domain.entities.Paciente;
+import br.com.clinica.app.domain.exception.DadoNaoEncontradoException;
 import br.com.clinica.app.domain.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +35,17 @@ public class PacienteController {
     }
 
     @GetMapping("/{pacienteId}")
-    public PacienteResponse findById(@PathVariable Long pacienteId){
+    public PacienteResponse findById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
         return pacienteService.getById(pacienteId);
     }
 
     @PatchMapping("/{pacienteId}")
-    public PacienteResponse update(@PathVariable Long pacienteId, @PathVariable PacienteRequest pacienteRequest){
+    public PacienteResponse update(@PathVariable Long pacienteId, @PathVariable PacienteRequest pacienteRequest) throws DadoNaoEncontradoException {
         return pacienteService.update(modelMapper.map(pacienteRequest, Paciente.class), pacienteId);
     }
 
     @DeleteMapping("/{pacienteId}")
-    public void deleteById(@PathVariable Long pacienteId){
+    public void deleteById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
         pacienteService.delete(pacienteId);
     }
 
