@@ -37,7 +37,7 @@ public class SecretarioController {
         return secretarioService.getById(secretarioId);
     }
 
-    @PatchMapping("/secretarioId")
+    @PatchMapping("/{secretarioId}")
     public SecretarioResponse update(@PathVariable Long secretarioId, @PathVariable SecretarioRequest secretarioRequest){
         return secretarioService.update(modelMapper.map(secretarioRequest, Secretario.class), secretarioId);
     }

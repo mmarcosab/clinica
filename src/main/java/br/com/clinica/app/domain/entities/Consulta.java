@@ -1,7 +1,6 @@
 package br.com.clinica.app.domain.entities;
 
 import lombok.*;
-
 import java.util.List;
 
 
@@ -13,4 +12,5 @@ public class Consulta {
     private String descricao;
     private List<String> exames;
     private Medico medico;
+    private Boolean consultaPaga;
 }

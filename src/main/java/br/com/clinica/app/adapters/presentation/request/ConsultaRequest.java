@@ -8,7 +8,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultaRequest {
-
     private String descricao;
     private List<String> exames;
     private MedicoRequest medico;

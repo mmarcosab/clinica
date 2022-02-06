@@ -38,7 +38,7 @@ public class PacienteController {
         return pacienteService.getById(pacienteId);
     }
 
-    @PatchMapping("/pacienteId")
+    @PatchMapping("/{pacienteId}")
     public PacienteResponse update(@PathVariable Long pacienteId, @PathVariable PacienteRequest pacienteRequest){
         return pacienteService.update(modelMapper.map(pacienteRequest, Paciente.class), pacienteId);
     }
