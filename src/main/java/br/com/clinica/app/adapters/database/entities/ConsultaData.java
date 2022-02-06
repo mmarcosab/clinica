@@ -18,7 +18,7 @@ public class ConsultaData {
     private Long id;
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.PERSIST)
     private List<ExameData> exames;
     @OneToOne(cascade=CascadeType.PERSIST)
     private MedicoData medico;
