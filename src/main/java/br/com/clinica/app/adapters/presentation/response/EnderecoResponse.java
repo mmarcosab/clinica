@@ -2,6 +2,7 @@ package br.com.clinica.app.adapters.presentation.response;
 
 import lombok.*;
 
+@Setter
 @ToString
 @Getter
 @NoArgsConstructor

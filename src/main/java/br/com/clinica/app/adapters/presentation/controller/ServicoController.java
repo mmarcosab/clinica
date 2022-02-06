@@ -8,7 +8,10 @@ import br.com.clinica.app.domain.service.ServicoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 
 
@@ -22,30 +25,32 @@ public class ServicoController {
     private ModelMapper modelMapper = new ModelMapper();
 
     @PostMapping
-    public ServicoResponse create(@RequestBody ServicoRequest servicoRequest) {
+    public ResponseEntity<ServicoResponse> create(@RequestBody ServicoRequest servicoRequest) {
         log.info("PAYLOAD ENTRADA DE SERVICO: {}", servicoRequest);
-        return service.create(modelMapper.map(servicoRequest, Servico.class));
+        var response = service.create(modelMapper.map(servicoRequest, Servico.class));
+        return ResponseEntity.created(URI.create("/clinica/servicos/" + response.getId())).body(response);
     }
 
     @GetMapping
-    public List<ServicoResponse> list(){
+    public ResponseEntity<List<ServicoResponse>> list(){
         log.info("LISTANDO SERVICOS");
-        return service.list();
+        return ResponseEntity.ok(service.list());
     }
 
     @GetMapping("/{servicoId}")
-    public ServicoResponse findById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
-        return service.getById(servicoId);
+    public ResponseEntity<ServicoResponse> findById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(service.getById(servicoId));
     }
 
     @PatchMapping("/{servicoId}")
-    public ServicoResponse update(@PathVariable Long servicoId, @PathVariable ServicoRequest servicoRequest) throws DadoNaoEncontradoException {
-        return service.update(modelMapper.map(servicoRequest, Servico.class), servicoId);
+    public ResponseEntity<ServicoResponse> update(@PathVariable Long servicoId, @PathVariable ServicoRequest servicoRequest) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(service.update(modelMapper.map(servicoRequest, Servico.class), servicoId));
     }
 
     @DeleteMapping("/{servicoId}")
-    public void deleteById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
+    public ResponseEntity<Void> deleteById(@PathVariable Long servicoId) throws DadoNaoEncontradoException {
         service.delete(servicoId);
+        return ResponseEntity.ok().build();
     }
 
 }

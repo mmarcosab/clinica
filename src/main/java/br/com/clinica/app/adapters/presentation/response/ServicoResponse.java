@@ -1,17 +1,16 @@
 package br.com.clinica.app.adapters.presentation.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+@Setter
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicoResponse {
+    private Long id;
     private String servico;
     private BigDecimal valor;
 }

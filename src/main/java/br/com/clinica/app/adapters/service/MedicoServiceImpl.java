@@ -34,8 +34,7 @@ public class MedicoServiceImpl implements MedicoService {
         List<MedicoData> medicosData = medicoRepository.findAll();
         List<MedicoResponse> medicosResponse = new ArrayList<>();
         for(MedicoData s : medicosData){
-            var medicoResponse = modelMapper.map(s, MedicoResponse.class);
-            medicosResponse.add(medicoResponse);
+            medicosResponse.add(modelMapper.map(s, MedicoResponse.class));
         }
         return medicosResponse;
     }

@@ -7,7 +7,10 @@ import br.com.clinica.app.domain.service.ConsultaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 
 
@@ -21,30 +24,32 @@ public class ConsultaController {
     private ModelMapper modelMapper = new ModelMapper();
 
     @PostMapping
-    public ConsultaResponse create(@RequestBody ConsultaRequest consultaRequest) {
+    public ResponseEntity<ConsultaResponse> create(@RequestBody ConsultaRequest consultaRequest) {
         log.info("PAYLOAD ENTRADA DE CONSULTA: {}", consultaRequest);
-        return service.create(modelMapper.map(consultaRequest, Consulta.class));
+        var response = service.create(modelMapper.map(consultaRequest, Consulta.class));
+        return ResponseEntity.created(URI.create("/clinica/consultas/" + response.getId())).body(response);
     }
 
     @GetMapping
-    public List<ConsultaResponse> list(){
+    public ResponseEntity<List<ConsultaResponse>> list(){
         log.info("LISTANDO CONSULTAS");
-        return service.list();
+        return ResponseEntity.ok(service.list());
     }
 
     @GetMapping("/{consultaId}")
-    public ConsultaResponse findById(@PathVariable Long consultaId){
-        return service.getById(consultaId);
+    public ResponseEntity<ConsultaResponse> findById(@PathVariable Long consultaId){
+        return ResponseEntity.ok(service.getById(consultaId));
     }
 
     @PatchMapping("/{consultaId}")
-    public ConsultaResponse update(@PathVariable Long consultaId, @PathVariable ConsultaRequest consultaRequest){
-        return service.update(modelMapper.map(consultaRequest, Consulta.class), consultaId);
+    public ResponseEntity<ConsultaResponse> update(@PathVariable Long consultaId, @PathVariable ConsultaRequest consultaRequest){
+        return ResponseEntity.ok(service.update(modelMapper.map(consultaRequest, Consulta.class), consultaId));
     }
 
     @DeleteMapping("/{consultaId}")
-    public void deleteById(@PathVariable Long consultaId){
+    public ResponseEntity<Void> deleteById(@PathVariable Long consultaId){
         service.delete(consultaId);
+        return ResponseEntity.ok().build();
     }
 
 

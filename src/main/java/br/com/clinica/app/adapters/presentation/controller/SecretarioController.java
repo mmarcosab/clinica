@@ -8,7 +8,10 @@ import br.com.clinica.app.domain.service.SecretarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 
 
@@ -22,30 +25,32 @@ public class SecretarioController {
     private ModelMapper modelMapper = new ModelMapper();
 
     @PostMapping
-    public SecretarioResponse create(@RequestBody SecretarioRequest secretarioRequest) {
+    public ResponseEntity<SecretarioResponse> create(@RequestBody SecretarioRequest secretarioRequest) {
         log.info("PAYLOAD ENTRADA DE SECRETARIO: {}", secretarioRequest);
-        return secretarioService.create(modelMapper.map(secretarioRequest, Secretario.class));
+        var response = secretarioService.create(modelMapper.map(secretarioRequest, Secretario.class));
+        return ResponseEntity.created(URI.create("/clinica/secretarios/" + response.getId())).body(response);
     }
 
     @GetMapping
-    public List<SecretarioResponse> list(){
+    public ResponseEntity<List<SecretarioResponse>> list(){
         log.info("LISTANDO SECRETARIOS(AS)");
-        return secretarioService.list();
+        return ResponseEntity.ok(secretarioService.list());
     }
 
     @GetMapping("/{secretarioId}")
-    public SecretarioResponse findById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
-        return secretarioService.getById(secretarioId);
+    public ResponseEntity<SecretarioResponse> findById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(secretarioService.getById(secretarioId));
     }
 
     @PatchMapping("/{secretarioId}")
-    public SecretarioResponse update(@PathVariable Long secretarioId, @PathVariable SecretarioRequest secretarioRequest) throws DadoNaoEncontradoException {
-        return secretarioService.update(modelMapper.map(secretarioRequest, Secretario.class), secretarioId);
+    public ResponseEntity<SecretarioResponse> update(@PathVariable Long secretarioId, @PathVariable SecretarioRequest secretarioRequest) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(secretarioService.update(modelMapper.map(secretarioRequest, Secretario.class), secretarioId));
     }
 
     @DeleteMapping("/{secretarioId}")
-    public void deleteById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
+    public ResponseEntity<Void> deleteById(@PathVariable Long secretarioId) throws DadoNaoEncontradoException {
         secretarioService.delete(secretarioId);
+        return ResponseEntity.ok().build();
     }
 
 }

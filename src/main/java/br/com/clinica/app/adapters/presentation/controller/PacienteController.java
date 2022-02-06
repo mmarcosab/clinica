@@ -9,7 +9,10 @@ import br.com.clinica.app.domain.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 
 
@@ -23,30 +26,32 @@ public class PacienteController {
     private ModelMapper modelMapper = new ModelMapper();
 
     @PostMapping
-    public PacienteResponse create(@RequestBody PacienteRequest pacienteRequest) {
+    public ResponseEntity<PacienteResponse> create(@RequestBody PacienteRequest pacienteRequest) {
         log.info("PAYLOAD ENTRADA DE PACIENTE: {}", pacienteRequest);
-        return pacienteService.create(modelMapper.map(pacienteRequest, Paciente.class));
+        var response = pacienteService.create(modelMapper.map(pacienteRequest, Paciente.class));
+        return ResponseEntity.created(URI.create("/clinica/pacientes/" + response.getId())).body(response);
     }
 
     @GetMapping
-    public List<PacienteResponse> list(){
+    public ResponseEntity<List<PacienteResponse>> list(){
         log.info("LISTANDO PACIENTES");
-        return pacienteService.list();
+        return ResponseEntity.ok(pacienteService.list());
     }
 
     @GetMapping("/{pacienteId}")
-    public PacienteResponse findById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
-        return pacienteService.getById(pacienteId);
+    public ResponseEntity<PacienteResponse>  findById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(pacienteService.getById(pacienteId));
     }
 
     @PatchMapping("/{pacienteId}")
-    public PacienteResponse update(@PathVariable Long pacienteId, @PathVariable PacienteRequest pacienteRequest) throws DadoNaoEncontradoException {
-        return pacienteService.update(modelMapper.map(pacienteRequest, Paciente.class), pacienteId);
+    public ResponseEntity<PacienteResponse>  update(@PathVariable Long pacienteId, @PathVariable PacienteRequest pacienteRequest) throws DadoNaoEncontradoException {
+        return ResponseEntity.ok(pacienteService.update(modelMapper.map(pacienteRequest, Paciente.class), pacienteId));
     }
 
     @DeleteMapping("/{pacienteId}")
-    public void deleteById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
+    public ResponseEntity<Void> deleteById(@PathVariable Long pacienteId) throws DadoNaoEncontradoException {
         pacienteService.delete(pacienteId);
+        return ResponseEntity.ok().build();
     }
 
 }
