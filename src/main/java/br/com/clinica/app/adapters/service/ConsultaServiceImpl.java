@@ -25,8 +25,7 @@ public class ConsultaServiceImpl implements ConsultaService {
     @Override
     public ConsultaResponse create(Consulta consulta) {
         ConsultaData consultaData = modelMapper.map(consulta, ConsultaData.class);
-        ConsultaResponse response = modelMapper.map(repository.save(consultaData), ConsultaResponse.class);
-        return response;
+        return modelMapper.map(repository.save(consultaData), ConsultaResponse.class);
     }
 
     @Override

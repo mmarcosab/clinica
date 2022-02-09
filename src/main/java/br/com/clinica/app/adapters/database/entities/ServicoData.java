@@ -21,6 +21,8 @@ public class ServicoData {
     private String servico;
     @Column(name = "valor")
     private BigDecimal valor;
+    @Column(name = "pago")
+    private Boolean pago;
     @Column(name = "data_criacao")
     private LocalDate dataCriacao;
 }

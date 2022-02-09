@@ -21,13 +21,12 @@ public class SecretarioServiceImpl implements SecretarioService {
 
     private ModelMapper modelMapper = new ModelMapper();
     private final SecretarioRepository secretarioRepository;
-
+    private static final String NOT_FOUND = "secretario nao contrado pelo id: ";
 
     @Override
     public SecretarioResponse create(Secretario secretario) {
         SecretarioData secretarioData = modelMapper.map(secretario, SecretarioData.class);
-        SecretarioResponse response = modelMapper.map(secretarioRepository.save(secretarioData), SecretarioResponse.class);
-        return response;
+        return modelMapper.map(secretarioRepository.save(secretarioData), SecretarioResponse.class);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class SecretarioServiceImpl implements SecretarioService {
     public SecretarioResponse update(Secretario secretario, Long id) throws DadoNaoEncontradoException {
         var secretarioPesquisado = secretarioRepository.findById(id);
         if(secretarioPesquisado.isEmpty()){
-            throw new DadoNaoEncontradoException("secretario nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         var secretarioData = modelMapper.map(secretario, SecretarioData.class);
         secretarioData.setId(id);
@@ -55,7 +54,7 @@ public class SecretarioServiceImpl implements SecretarioService {
     public void delete(Long id) throws DadoNaoEncontradoException {
         var secretarioData = secretarioRepository.findById(id);
         if(secretarioData.isEmpty()){
-            throw new DadoNaoEncontradoException("secretario nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         secretarioRepository.deleteById(id);
     }
@@ -64,7 +63,7 @@ public class SecretarioServiceImpl implements SecretarioService {
     public SecretarioResponse getById(Long id) throws DadoNaoEncontradoException {
         var secretarioData = secretarioRepository.findById(id);
         if(secretarioData.isEmpty()){
-            throw new DadoNaoEncontradoException("secretario nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         return modelMapper.map(secretarioData.get(), SecretarioResponse.class);
     }

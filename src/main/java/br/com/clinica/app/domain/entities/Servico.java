@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class Servico {
-    private String servico;
+    private String descricao;
     private BigDecimal valor;
 }

@@ -21,13 +21,12 @@ public class ServicoServiceImpl implements ServicoService {
 
     private ModelMapper modelMapper = new ModelMapper();
     private final ServicoRepository servicoRepository;
-
+    private static final String NOT_FOUND = "servico nao contrado pelo id: ";
 
     @Override
     public ServicoResponse create(Servico servico) {
         ServicoData servicoData = modelMapper.map(servico, ServicoData.class);
-        ServicoResponse response = modelMapper.map(servicoRepository.save(servicoData), ServicoResponse.class);
-        return response;
+        return modelMapper.map(servicoRepository.save(servicoData), ServicoResponse.class);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class ServicoServiceImpl implements ServicoService {
     public ServicoResponse update(Servico servico, Long id) throws DadoNaoEncontradoException {
         var servicoPesquisado = servicoRepository.findById(id);
         if(servicoPesquisado.isEmpty()){
-            throw new DadoNaoEncontradoException("servico nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         var servicoData = modelMapper.map(servico, ServicoData.class);
         servicoData.setId(id);
@@ -55,7 +54,7 @@ public class ServicoServiceImpl implements ServicoService {
     public void delete(Long id) throws DadoNaoEncontradoException {
         var servicoData = servicoRepository.findById(id);
         if(servicoData.isEmpty()){
-            throw new DadoNaoEncontradoException("servico nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         servicoRepository.deleteById(id);
     }
@@ -64,9 +63,9 @@ public class ServicoServiceImpl implements ServicoService {
     public ServicoResponse getById(Long id) throws DadoNaoEncontradoException {
         var servicoData = servicoRepository.findById(id);
         if(servicoData.isEmpty()){
-            throw new DadoNaoEncontradoException("servico nao contrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
-        return  modelMapper.map(servicoData.get(), ServicoResponse.class);
+        return modelMapper.map(servicoData.get(), ServicoResponse.class);
     }
 
 }

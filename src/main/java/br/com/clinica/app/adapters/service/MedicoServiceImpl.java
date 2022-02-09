@@ -21,12 +21,12 @@ public class MedicoServiceImpl implements MedicoService {
 
     private ModelMapper modelMapper = new ModelMapper();
     private final MedicoRepository medicoRepository;
+    private static final String NOT_FOUND = "medico nao encontrado pelo id: ";
 
     @Override
     public MedicoResponse create(Medico medico) {
         MedicoData secretarioData = modelMapper.map(medico, MedicoData.class);
-        MedicoResponse response = modelMapper.map(medicoRepository.save(secretarioData), MedicoResponse.class);
-        return response;
+        return modelMapper.map(medicoRepository.save(secretarioData), MedicoResponse.class);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MedicoServiceImpl implements MedicoService {
     public MedicoResponse update(Medico medico, Long id) throws DadoNaoEncontradoException {
         var medicoPesquisado = medicoRepository.findById(id);
         if(medicoPesquisado.isEmpty()){
-            throw new DadoNaoEncontradoException("medico nao encontrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         var medicoData = modelMapper.map(medico, MedicoData.class);
         medicoData.setId(id);
@@ -54,7 +54,7 @@ public class MedicoServiceImpl implements MedicoService {
     public void delete(Long id) throws DadoNaoEncontradoException {
         var medicoData = medicoRepository.findById(id);
         if(medicoData.isEmpty()){
-            throw new DadoNaoEncontradoException("medico nao encontrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         medicoRepository.deleteById(id);
     }
@@ -63,7 +63,7 @@ public class MedicoServiceImpl implements MedicoService {
     public MedicoResponse getById(Long id) throws DadoNaoEncontradoException {
         var medicoData = medicoRepository.findById(id);
         if(medicoData.isEmpty()){
-            throw new DadoNaoEncontradoException("medico nao encontrado pelo id: " + id);
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         return modelMapper.map(medicoData.get(), MedicoResponse.class);
     }

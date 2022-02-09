@@ -22,13 +22,12 @@ public class PacienteServiceImpl implements PacienteService {
 
     private ModelMapper modelMapper = new ModelMapper();
     private final PacienteRepository pacienteRepository;
-
+    private static final String NOT_FOUND = "paciente nao contrado pelo id: ";
 
     @Override
     public PacienteResponse create(Paciente paciente) {
         PacienteData pacienteData = modelMapper.map(paciente, PacienteData.class);
-        PacienteResponse response = modelMapper.map(pacienteRepository.save(pacienteData), PacienteResponse.class);
-        return response;
+        return modelMapper.map(pacienteRepository.save(pacienteData), PacienteResponse.class);
     }
 
     @Override
@@ -44,8 +43,8 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public PacienteResponse update(Paciente paciente, Long id) throws DadoNaoEncontradoException {
         var pacientePesquisado = pacienteRepository.findById(id);
-        if(pacientePesquisado == null){
-            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        if(pacientePesquisado.isEmpty()){
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         var pacienteData = modelMapper.map(paciente, PacienteData.class);
         pacienteData.setId(id);
@@ -55,8 +54,8 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public void delete(Long id) throws DadoNaoEncontradoException {
         var pacienteData = pacienteRepository.findById(id);
-        if(pacienteData == null){
-            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        if(pacienteData.isEmpty()){
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         pacienteRepository.deleteById(id);
     }
@@ -64,8 +63,8 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public PacienteResponse getById(Long id) throws DadoNaoEncontradoException {
         var pacienteData = pacienteRepository.findById(id);
-        if(pacienteData == null){
-            throw new DadoNaoEncontradoException("paciente nao contrado pelo id: " + id);
+        if(pacienteData.isEmpty()){
+            throw new DadoNaoEncontradoException(NOT_FOUND + id);
         }
         return modelMapper.map(pacienteData.get(), PacienteResponse.class);
     }
