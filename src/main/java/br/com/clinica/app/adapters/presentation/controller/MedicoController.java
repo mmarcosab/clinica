@@ -30,6 +30,7 @@ public class MedicoController {
         return ResponseEntity.created(URI.create("/clinica/medicos/" + response.getId())).body(medicoService.create(modelMapper.map(medicoRequest, Medico.class)));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
     public ResponseEntity<List<MedicoResponse>> list(){
         log.info("LISTANDO MEDICOS(AS)");

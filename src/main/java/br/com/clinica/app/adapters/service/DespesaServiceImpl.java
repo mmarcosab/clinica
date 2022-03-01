@@ -1,23 +1,16 @@
 package br.com.clinica.app.adapters.service;
 
 import br.com.clinica.app.adapters.database.entities.DespesaData;
-import br.com.clinica.app.adapters.database.entities.ServicoData;
 import br.com.clinica.app.adapters.database.repository.DespesaRepository;
-import br.com.clinica.app.adapters.database.repository.ServicoRepository;
 import br.com.clinica.app.adapters.presentation.response.DespesaResponse;
-import br.com.clinica.app.adapters.presentation.response.ServicoResponse;
 import br.com.clinica.app.domain.entities.Despesa;
-import br.com.clinica.app.domain.entities.RegistroCaixaSaida;
-import br.com.clinica.app.domain.entities.Servico;
 import br.com.clinica.app.domain.exception.DadoNaoEncontradoException;
 import br.com.clinica.app.domain.service.DespesaService;
-import br.com.clinica.app.domain.service.ServicoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
